@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SRCB HED Digital Class Record</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="auth-container flex" id="authContainer">
+      <!-- Left Panel -->
+      <div
+        class="left-panel flex flex-col justify-center items-center text-center"
+      >
+        <div class="logo-container mb-5 mt-[-100px]">
+          <img
+            src="images/HED DIGITAL CLASS RECORD LOGO.png"
+            alt="SRCB Logo"
+            class="logo w-50 mx-auto"
+          />
+        </div>
+        <h2 class="font-bold text-white text-xl md:text-3xl mb-10">
+          ST. RITAS COLLEGE OF BALINGASAG
+        </h2>
+        <p class="subtitle text-white text-sm max-w-xs leading-relaxed">
+          Easily manage student records and track class progress with this
+          digital solution.
+        </p>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="right-panel p-2 flex flex-col justify-center items-center">
+        <!-- Login Form -->
+        <form
+          id="loginForm"
+          class="auth-form login-form rounded-lg bg-white w-full max-w-sm p-6"
+          novalidate
+        >
+          <div class="form-header text-center mb-6">
+            <h1 class="form-title font-bold text-blue-700 text-3xl mb-2">
+              Login
+            </h1>
+            <p class="text-gray-600 text-sm">
+              Log in to access your digital class record and stay updated.
+            </p>
+          </div>
+          <div class="form-body">
+            <div class="mb-4">
+              <label for="loginEmail" class="block mb-2 font-medium text-sm"
+                >Email</label
+              >
+              <input
+                type="email"
+                class="w-full border border-gray-300 rounded shadow-sm px-4 py-2 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                id="loginEmail"
+                name="email"
+                placeholder="Enter email"
+                required
+                autocomplete="email"
+              />
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="loginEmailError"
+              >
+                Please enter a valid email address.
+              </div>
+            </div>
+            <div class="mb-4 relative">
+              <label for="loginPassword" class="block mb-2 font-medium text-sm"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  class="w-full border border-gray-300 rounded shadow-sm px-4 py-2 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  id="loginPassword"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                  autocomplete="current-password"
+                />
+                <span
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  id="toggleLoginPassword"
+                >
+                  <i class="fas fa-eye"></i>
+                </span>
+              </div>
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="loginPasswordError"
+              >
+                Please enter your password.
+              </div>
+            </div>
+            <div class="flex flex-col gap-1 mb-6">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                  name="remember"
+                  class="mr-2 rounded cursor-pointer"
+                />
+                <label
+                  for="rememberMe"
+                  class="select-none text-sm text-gray-700 cursor-pointer"
+                  >Remember Me</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="agreeTermsLogin"
+                  name="agreeTermsLogin"
+                  class="mr-2 rounded cursor-pointer"
+                  required
+                />
+                <label
+                  for="agreeTermsLogin"
+                  class="select-none text-sm text-gray-700 cursor-pointer"
+                >
+                  I agree to the
+                  <a href="/terms-service" class="text-blue-600 hover:underline"
+                    >Terms of Service</a
+                  >
+                </label>
+              </div>
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="agreeTermsLoginError"
+              >
+                You must agree to the Terms of Service.
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md py-3 text-lg text-center"
+            >
+              Sign In
+            </button>
+          </div>
+          <div class="form-footer text-center mt-6">
+            <span class="text-sm text-gray-600"
+              >Don't have an account yet?
+            </span>
+            <button
+              type="button"
+              id="showRegisterBtn"
+              class="text-blue-600 hover:text-blue-800 hover:underline font-medium text-sm focus:outline-none"
+            >
+              Sign Up
+            </button>
+          </div>
+        </form>
+
+        <!-- Registration Form -->
+        <form
+          id="registrationForm"
+          class="auth-form registration-form hidden p-6 rounded-lg bg-white w-full max-w-md"
+          novalidate
+        >
+          <div class="form-header text-center mb-6">
+            <h1 class="form-title font-bold text-blue-700 text-3xl mb-2">
+              Register
+            </h1>
+            <p class="text-gray-600 text-sm">
+              Create your account to access your class records and updates.
+            </p>
+          </div>
+          <div class="form-body">
+            <div class="flex flex-col sm:flex-row sm:space-x-3 mb-4">
+              <div class="flex-1 mb-3 sm:mb-0">
+                <label for="firstName" class="block mb-1 font-medium text-sm"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="First name"
+                  required
+                  autocomplete="given-name"
+                />
+                <div
+                  class="error-message text-red-600 text-xs mt-1 hidden"
+                  id="firstNameError"
+                >
+                  Please enter your first name.
+                </div>
+              </div>
+              <div class="flex-1">
+                <label for="lastName" class="block mb-1 font-medium text-sm"
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Last name"
+                  required
+                  autocomplete="family-name"
+                />
+                <div
+                  class="error-message text-red-600 text-xs mt-1 hidden"
+                  id="lastNameError"
+                >
+                  Please enter your last name.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="regEmail" class="block mb-1 font-medium text-sm"
+                >Email</label
+              >
+              <input
+                type="email"
+                class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                id="regEmail"
+                name="email"
+                placeholder="Enter your email"
+                required
+                autocomplete="email"
+              />
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="regEmailError"
+              >
+                Please enter a valid email address.
+              </div>
+            </div>
+            <div class="mb-3 relative">
+              <label for="regPassword" class="block mb-1 font-medium text-sm"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  id="regPassword"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                  autocomplete="new-password"
+                />
+                <span
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  id="toggleRegPassword"
+                >
+                  <i class="fas fa-eye"></i>
+                </span>
+              </div>
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="regPasswordError"
+              >
+                Please enter a password (minimum 6 characters).
+              </div>
+            </div>
+            <div class="mb-4 relative">
+              <label
+                for="confirmPassword"
+                class="block mb-1 font-medium text-sm"
+                >Confirm Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  required
+                  autocomplete="new-password"
+                />
+                <span
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  id="toggleConfirmPassword"
+                >
+                  <i class="fas fa-eye"></i>
+                </span>
+              </div>
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="confirmPasswordError"
+              >
+                Passwords do not match.
+              </div>
+            </div>
+            <div class="flex items-start mb-6">
+              <input
+                type="checkbox"
+                id="agreeTerms"
+                name="agreeTerms"
+                class="mr-2 mt-1 rounded"
+                required
+              />
+              <label for="agreeTerms" class="select-none text-sm text-gray-700">
+                I agree to the
+                <a href="/terms-service" class="text-blue-600 hover:underline"
+                  >Terms of Service</a
+                >
+                and
+                <a href="/privacy-policy" class="text-blue-600 hover:underline"
+                  >Data Privacy Policy</a
+                >
+              </label>
+              <div
+                class="error-message text-red-600 text-xs mt-1 hidden"
+                id="agreeTermsError"
+              >
+                You must agree to the Terms of Service and Data Privacy Policy.
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white py-2 px-4 font-semibold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors text-sm"
+            >
+              Sign Up
+            </button>
+          </div>
+          <div class="form-footer text-center mt-6">
+            <span class="text-sm text-gray-600">Already have an account? </span>
+            <button
+              type="button"
+              id="showLoginBtn"
+              class="text-blue-600 hover:text-blue-800 hover:underline font-medium text-sm focus:outline-none"
+            >
+              Sign In
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <div
+          class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"
+        ></div>
+        <p class="text-gray-600">Processing...</p>
+      </div>
+    </div>
+
+    <script src="authentication.js"></script>
+  </body>
+</html>

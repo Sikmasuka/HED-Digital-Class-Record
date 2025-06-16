@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(./images/srcbwallpaper.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Adjust the 0.5 for more or less darkness */
+  z-index: 0;
+}
+
+.auth-container {
+  width: 70%;
+  max-width: 750px;
+  background-color: white;
+  border-radius: 10px;
+  /*  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); */
+  overflow: hidden;
+  display: flex;
+  z-index: 100;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.left-panel {
+  background-color: #163269;
+  width: 400px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.right-panel {
+  background-color: #ffffff;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  width: 100%;
+}
+
+.registration-form {
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  max-width: 250px;
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+    width: 95%;
+    max-width: 400px;
+    min-height: auto;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+  }
+}

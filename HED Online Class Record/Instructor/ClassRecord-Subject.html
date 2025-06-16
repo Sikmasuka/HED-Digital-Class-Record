@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HED Digital Class Record - Class Record</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .flex-container {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+      }
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+        display: none;
+      }
+      .class-record {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+        min-width: 1000px;
+      }
+      .class-record th,
+      .class-record td {
+        border: 1px solid #e2e8f0;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .class-record th {
+        background-color: #1e293b;
+        color: white;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+      .header-quizzes {
+        background-color: #bbf7d0 !important;
+        color: #1e293b !important;
+      }
+      .header-equiv {
+        background-color: #fef08a !important;
+        color: #1e293b !important;
+      }
+      .header-output {
+        background-color: #bbf7d0 !important;
+        color: #1e293b !important;
+      }
+      .header-exam {
+        background-color: #bae6fd !important;
+        color: #1e293b !important;
+      }
+      .header-midterm,
+      .header-final {
+        background-color: #c4b5fd !important;
+        color: white !important;
+      }
+      .header-grade {
+        background-color: #fecaca !important;
+        color: #1e293b !important;
+      }
+      .student-name {
+        text-align: left !important;
+        padding-left: 12px;
+        background-color: #f8fafc;
+        min-width: 180px;
+        font-weight: 500;
+      }
+      .course-year {
+        background-color: #f8fafc;
+        min-width: 80px;
+      }
+      .total-row {
+        background-color: #e2e8f0;
+        font-weight: 600;
+      }
+      .grade-input {
+        width: 50px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        padding: 4px;
+        text-align: center;
+        font-size: 0.85rem;
+        background: white;
+      }
+      .grade-input:focus {
+        border-color: #2563eb;
+        background-color: #f0f9ff;
+        outline: none;
+      }
+      .calculated {
+        background-color: #f1f5f9;
+        font-weight: 600;
+      }
+      .passed {
+        background-color: #dcfce7;
+        color: #10b981;
+        font-weight: 600;
+      }
+      .failed {
+        background-color: #fee2e2;
+        color: #ef4444;
+        font-weight: 600;
+      }
+      .percentage {
+        font-size: 0.7rem;
+        color: #64748b;
+        display: block;
+      }
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .btn-primary {
+        background-color: #2563eb;
+        color: white;
+      }
+      .btn-primary:hover {
+        background-color: #1d4ed8;
+      }
+      .btn-secondary {
+        background-color: #64748b;
+        color: white;
+      }
+      .btn-secondary:hover {
+        background-color: #475569;
+      }
+      @media (max-width: 768px) {
+        .w-56 {
+          width: 200px;
+        }
+        .flex-1 {
+          margin-left: 220px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 font-sans scroll-smooth">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <div class="flex-container flex h-screen">
+      <!-- Sidebar -->
+      <div
+        class="w-56 h-screen text-white bg-gradient-to-b from-[#163269] to-[#2F3FE4] flex flex-col shadow-md"
+      >
+        <div class="flex p-4">
+          <img
+            src="../images/SRCB Logo.png"
+            alt="SRCB LOGO"
+            class="w-14 h-14"
+          />
+          <p class="text-xs font-bold leading-tight mx-3 mt-2">
+            HED <br />
+            Digital Class <br />
+            Record
+          </p>
+        </div>
+        <nav class="flex-1 px-4 space-y-4 mt-10 font-bold">
+          <a
+            href="dashboard.html"
+            class="flex items-center py-1.5 px-2.5 hover:bg-white hover:bg-opacity-20 rounded"
+          >
+            <img
+              class="w-5 mr-3"
+              src="../images/icons8-dashboard-layout-24.png"
+              alt="Dashboard"
+            />
+            <span>Dashboard</span>
+          </a>
+          <a
+            href="class-record.html"
+            class="flex items-center py-1.5 px-2.5 bg-white bg-opacity-20 rounded"
+          >
+            <img
+              class="w-6 mr-3"
+              src="../images/icons8-logbook-80.png"
+              alt="Class Record"
+            />
+            <span>Class Record</span>
+          </a>
+          <a
+            href="student-dashboard.html"
+            class="flex items-center py-1.5 px-2.5 hover:bg-white hover:bg-opacity-20 rounded"
+          >
+            <img
+              class="w-5 mr-3"
+              src="../images/icons8-people-24.png"
+              alt="Students"
+            />
+            <span>Students</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center py-1.5 px-2.5 hover:bg-white hover:bg-opacity-20 rounded"
+          >
+            <img
+              class="w-5 mr-3"
+              src="../images/icons8-attendance-32 (1).png"
+              alt="Attendance"
+            />
+            <span>Attendance</span>
+          </a>
+        </nav>
+        <div class="px-4 py-4">
+          <a
+            href="../index.html"
+            class="flex items-center space-x-2 text-white hover:underline transition-colors duration-200 logout-link"
+          >
+            <i class="fas fa-sign-out-alt text-lg"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="flex-1 bg-[#F5F5F5] overflow-y-auto h-screen p-4">
+        <!-- Header -->
+        <div
+          class="flex justify-between items-center bg-white rounded-lg shadow-md border border-gray-300 p-4 mb-6"
+        >
+          <h1 class="text-[#163269] font-bold text-xl">Class Record</h1>
+          <div class="flex items-center space-x-4">
+            <span id="userGreeting">Hello, Sir Manuel</span>
+            <button
+              id="userProfileBtn"
+              class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+              aria-label="User Profile"
+            >
+              <i class="fas fa-user"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Subjects Section -->
+        <div class="px-8">
+          <h2 class="text-xl text-[#163269] font-semibold mb-4">
+            Select Subject
+          </h2>
+          <div class="bg-white rounded-lg shadow-md border border-gray-300 p-5">
+            <div class="flex flex-wrap gap-[40px] justify-center">
+              <button
+                class="bg-blue-100 text-blue-600 font-semibold px-4 py-2 rounded hover:bg-blue-200"
+                onclick="selectSubject('GE 4')"
+              >
+                GE 4
+              </button>
+              <button
+                class="bg-blue-100 text-blue-600 font-semibold px-4 py-2 rounded hover:bg-blue-200"
+                onclick="selectSubject('NSTP 1')"
+              >
+                NSTP 1
+              </button>
+              <button
+                class="bg-blue-100 text-blue-600 font-semibold px-4 py-2 rounded hover:bg-blue-200"
+                onclick="selectSubject('Contemporary Mathematics')"
+              >
+                Contemporary Mathematics
+              </button>
+              <button
+                class="bg-blue-100 text-blue-600 font-semibold px-4 py-2 rounded hover:bg-blue-200"
+                onclick="selectSubject('100 History of Mathematics')"
+              >
+                100 History of Mathematics
+              </button>
+            </div>
+            <!-- Hidden select elements for compatibility with grading-automation.js -->
+            <select
+              id="subjectSelect"
+              class="hidden"
+              onchange="loadSubjectData()"
+            ></select>
+            <select
+              id="finalSubjectSelect"
+              class="hidden"
+              onchange="loadSubjectData()"
+            ></select>
+          </div>
+        </div>
+
+        <!-- Midterm Table -->
+        <div class="container" id="midtermContainer">
+          <h1 id="midtermSubjectTitle">
+            Subject Code and Title - Midterm Class Record
+          </h1>
+          <div class="controls flex flex-wrap gap-4 mb-4">
+            <button class="btn btn-primary" onclick="calculateAll('midterm')">
+              Calculate Midterm
+            </button>
+            <button class="btn btn-secondary" onclick="clearAll('midterm')">
+              Clear Midterm
+            </button>
+            <button class="btn btn-secondary" onclick="addStudent()">
+              Add Student
+            </button>
+          </div>
+          <table class="class-record" id="midtermTable">
+            <thead>
+              <tr>
+                <th rowspan="3">Student Name</th>
+                <th rowspan="3">Course/Yr</th>
+                <th colspan="6" class="header-quizzes">
+                  Quizzes / Assignments
+                </th>
+                <th rowspan="2">Oral</th>
+                <th rowspan="2">Total</th>
+                <th rowspan="2">Ave</th>
+                <th rowspan="2" class="header-equiv">
+                  EQV<br /><span class="percentage">30%</span>
+                </th>
+                <th colspan="2" class="header-output">Output</th>
+                <th rowspan="2">Total</th>
+                <th rowspan="2">Ave</th>
+                <th rowspan="2" class="header-equiv">
+                  EQV<br /><span class="percentage">30%</span>
+                </th>
+                <th rowspan="2" class="header-exam">Exam</th>
+                <th rowspan="2">Ave</th>
+                <th rowspan="2" class="header-equiv">
+                  EQV<br /><span class="percentage">40%</span>
+                </th>
+                <th rowspan="2" class="header-exam">FG</th>
+                <th rowspan="2" class="header-midterm">
+                  Midterm<br /><span class="percentage">100%</span>
+                </th>
+                <th rowspan="2" class="header-grade">Value</th>
+                <th rowspan="2" class="header-grade">Remarks</th>
+              </tr>
+              <tr>
+                <th>Quiz 1</th>
+                <th>Quiz 2</th>
+                <th>Quiz 3</th>
+                <th>Quiz 4</th>
+                <th>Quiz 5</th>
+                <th>Quiz 6</th>
+                <th>Act 1</th>
+                <th>Act 2</th>
+              </tr>
+              <tr class="total-row">
+                <th>Total:</th>
+                <th></th>
+                <th>35</th>
+                <th>20</th>
+                <th>25</th>
+                <th>40</th>
+                <th>40</th>
+                <th>75</th>
+                <th>50</th>
+                <th>285</th>
+                <th>100</th>
+                <th>30</th>
+                <th>50</th>
+                <th>50</th>
+                <th>100</th>
+                <th>100</th>
+                <th>30</th>
+                <th>50</th>
+                <th>100</th>
+                <th></th>
+                <th></th>
+                <th>-</th>
+                <th>-</th>
+              </tr>
+            </thead>
+            <tbody id="midtermStudentRows"></tbody>
+          </table>
+        </div>
+
+        <!-- Final Table -->
+        <div class="container hidden" id="finalContainer">
+          <h1 id="finalSubjectTitle">
+            Subject Code and Title - Final Class Record
+          </h1>
+          <div class="controls flex flex-wrap gap-4 mb-4">
+            <button class="btn btn-primary" onclick="calculateAll('final')">
+              Calculate Final
+            </button>
+            <button class="btn btn-secondary" onclick="clearAll('final')">
+              Clear Final
+            </button>
+            <button class="btn btn-secondary" onclick="addStudent()">
+              Add Student
+            </button>
+          </div>
+          <table class="class-record" id="finalTable">
+            <thead>
+              <tr>
+                <th rowspan="3">Student Name</th>
+                <th rowspan="3">Course/Yr</th>
+                <th colspan="4" class="header-quizzes">Quizzes & Ass.</th>
+                <th rowspan="2">Oral</th>
+                <th rowspan="2">Total</th>
+                <th rowspan="2">Ave</th>
+                <th rowspan="2" class="header-equiv">
+                  EQV<br /><span class="percentage">30%</span>
+                </th>
+                <th colspan="2" class="header-output">Output</th>
+                <th rowspan="2">Total</th>
+                <th rowspan="2">Ave</th>
+                <th rowspan="2" class="header-equiv">
+                  EQV<br /><span class="percentage">40%</span>
+                </th>
+                <th rowspan="2" class="header-exam">Exam</th>
+                <th rowspan="2">Ave</th>
+                <th rowspan="2" class="header-equiv">
+                  EQV<br /><span class="percentage">30%</span>
+                </th>
+                <th rowspan="2" class="header-exam">FG</th>
+                <th rowspan="2" class="header-final">
+                  Final<br /><span class="percentage">100%</span>
+                </th>
+                <th rowspan="2" class="header-grade">Final Grade</th>
+                <th rowspan="2" class="header-grade">Value</th>
+                <th rowspan="2" class="header-grade">Remarks</th>
+              </tr>
+              <tr>
+                <th>Quiz 1</th>
+                <th>Quiz 2</th>
+                <th>Quiz 3</th>
+                <th>Quiz 4</th>
+                <th>Act 1</th>
+                <th>Act 2</th>
+              </tr>
+              <tr class="total-row">
+                <th>Total:</th>
+                <th></th>
+                <th>20</th>
+                <th>40</th>
+                <th>40</th>
+                <th>50</th>
+                <th>50</th>
+                <th>200</th>
+                <th>100</th>
+                <th>30</th>
+                <th>100</th>
+                <th>100</th>
+                <th>200</th>
+                <th>100</th>
+                <th>30</th>
+                <th>50</th>
+                <th>100</th>
+                <th>30</th>
+                <th>100</th>
+                <th>-</th>
+                <th>-</th>
+                <th>-</th>
+              </tr>
+            </thead>
+            <tbody id="finalStudentRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div
+      id="editProfileModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-white w-[60%] max-w-[700px] rounded-xl shadow-xl overflow-y-auto max-h-[90vh]"
+      >
+        <div
+          class="flex justify-between items-center bg-[#163269] rounded-t-xl px-6 py-4"
+        >
+          <h2 class="text-white text-2xl font-bold">Edit Profile</h2>
+          <button
+            id="closeEditProfileModal"
+            class="text-white text-2xl font-bold hover:text-gray-300"
+            aria-label="Close Edit Profile Modal"
+          >
+            ×
+          </button>
+        </div>
+        <div class="p-6">
+          <form id="editProfileForm" class="space-y-4">
+            <div class="grid grid-cols-3 gap-6">
+              <div>
+                <label
+                  for="editProfileTitle"
+                  class="block font-medium text-gray-700"
+                  >Title</label
+                >
+                <input
+                  type="text"
+                  id="editProfileTitle"
+                  name="editProfileTitle"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter title (e.g., Sir, Ma'am)"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="editProfileName"
+                  class="block font-medium text-gray-700"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="editProfileName"
+                  name="editProfileName"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter name"
+                  required
+                />
+              </div>
+              <div></div>
+            </div>
+            <div class="flex justify-end space-x-2">
+              <button
+                type="button"
+                id="cancelEditProfileBtn"
+                class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/Instructor/js/grading-automation.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const userProfileBtn = document.getElementById("userProfileBtn");
+        const editProfileModal = document.getElementById("editProfileModal");
+        const editProfileForm = document.getElementById("editProfileForm");
+        const userGreeting = document.getElementById("userGreeting");
+
+        if (userProfileBtn && editProfileModal) {
+          userProfileBtn.addEventListener("click", () => {
+            editProfileModal.classList.remove("hidden");
+          });
+        }
+
+        if (editProfileForm) {
+          editProfileForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const title = document
+              .getElementById("editProfileTitle")
+              .value.trim();
+            const name = document
+              .getElementById("editProfileName")
+              .value.trim();
+            if (title && name) {
+              userGreeting.textContent = `Hello, ${title} ${name}`;
+              Swal.fire({
+                title: "Success!",
+                text: "Profile updated successfully!",
+                icon: "success",
+              });
+              editProfileModal.classList.add("hidden");
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Please fill in both title and name.",
+                icon: "error",
+              });
+            }
+          });
+        }
+
+        const closeEditProfileModal = document.getElementById(
+          "closeEditProfileModal"
+        );
+        const cancelEditProfileBtn = document.getElementById(
+          "cancelEditProfileBtn"
+        );
+
+        if (closeEditProfileModal) {
+          closeEditProfileModal.addEventListener("click", () => {
+            editProfileModal.classList.add("hidden");
+          });
+        }
+
+        if (cancelEditProfileBtn) {
+          cancelEditProfileBtn.addEventListener("click", () => {
+            editProfileModal.classList.add("hidden");
+          });
+        }
+      });
+
+      // Function to select subject and show table
+      function selectSubject(subject) {
+        const midtermContainer = document.getElementById("midtermContainer");
+        const finalContainer = document.getElementById("finalContainer");
+        const subjectSelect = document.getElementById("subjectSelect");
+        const finalSubjectSelect =
+          document.getElementById("finalSubjectSelect");
+
+        // Show midterm table by default
+        midtermContainer.classList.remove("hidden");
+        finalContainer.classList.add("hidden");
+
+        // Update subject selection
+        subjectSelect.innerHTML = `<option value="${subject}" selected>${subject}</option>`;
+        finalSubjectSelect.innerHTML = `<option value="${subject}" selected>${subject}</option>`;
+
+        // Update titles
+        document.getElementById(
+          "midtermSubjectTitle"
+        ).textContent = `${subject} - Midterm Class Record`;
+        document.getElementById(
+          "finalSubjectTitle"
+        ).textContent = `${subject} - Final Class Record`;
+
+        // Load data
+        if (typeof loadSubjectData === "function") {
+          loadSubjectData();
+        } else {
+          console.error(
+            "loadSubjectData is not defined. Ensure grading-automation.js is loaded."
+          );
+        }
+      }
+
+      // Fallback to ensure showTable is defined
+      function showTable(tableType) {
+        const midtermContainer = document.getElementById("midtermContainer");
+        const finalContainer = document.getElementById("finalContainer");
+
+        if (tableType === "midterm") {
+          midtermContainer.classList.remove("hidden");
+          finalContainer.classList.add("hidden");
+        } else {
+          finalContainer.classList.remove("hidden");
+          midtermContainer.classList.add("hidden");
+        }
+        if (typeof loadSubjectData === "function") {
+          loadSubjectData();
+        }
+      }
+
+      // Initialize with midterm table
+      document.addEventListener("DOMContentLoaded", () => {
+        showTable("midterm");
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutLinks = document.querySelectorAll(".logout-link");
+        logoutLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            Swal.fire({
+              title: "Are you sure you want to logout?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, logout",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = link.href;
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

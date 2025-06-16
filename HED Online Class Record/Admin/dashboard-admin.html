@@ -1,0 +1,170 @@
+<!-- Admin Dashboard -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HED Digital Class Record - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN moved to head for better loading -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="bg-gray-100 font-sans scroll-smooth">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <div
+        class="w-56 h-screen text-white bg-gradient-to-b from-[#163269] to-[#2F3FE4] flex flex-col shadow-md"
+      >
+        <!-- Logo & Title -->
+        <div class="flex p-4">
+          <img
+            src="../images/HED DIGITAL CLASS RECORD LOGO.png"
+            alt="SRCB LOGO"
+            class="w-100 h-100p"
+          />
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 px-4 space-y-4 mt-10 font-bold">
+          <a
+            href="dashboard-admin.html"
+            class="flex items-center py-1.5 px-2.5 bg-white bg-opacity-20 rounded"
+          >
+            <img
+              class="w-5 mr-3"
+              src="../images/icons8-dashboard-layout-24.png"
+              alt="Dashboard"
+            />
+            <span>Dashboard</span>
+          </a>
+          <a
+            href="../Admin/student-dashboard-admin.html"
+            class="flex items-center py-1.5 px-2.5 hover:bg-white hover:bg-opacity-20 rounded"
+          >
+            <img
+              class="w-5 mr-3"
+              src="../images/icons8-people-24.png"
+              alt="Students"
+            />
+            <span>Students</span>
+          </a>
+          <a
+            href="instructor-dashboard-admin.html"
+            class="flex items-center py-1.5 px-2.5 hover:bg-white hover:bg-opacity-20 rounded"
+          >
+            <img
+              class="w-5 mr-3"
+              src="../images/icons8-lawyer-48.png"
+              alt="Students"
+            />
+            <span>Instructors</span>
+          </a>
+        </nav>
+
+        <!-- Logout -->
+        <div class="px-4 py-4">
+          <a
+            href="../index.html"
+            class="flex items-center space-x-2 text-white hover:underline transition-colors duration-200"
+          >
+            <i class="fas fa-sign-out-alt text-lg"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="flex-1 bg-[#F5F5F5] overflow-y-auto h-screen p-4">
+        <div
+          class="flex justify-between items-center bg-white rounded-lg shadow-md border border-gray-300 p-4 mb-6"
+        >
+          <h1 class="text-[#163269] font-bold text-xl">Dashboard</h1>
+          <div class="flex items-center space-x-4">
+            <span id="userGreeting">Hello, Admin</span>
+            <button
+              id="userProfileBtn"
+              class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+              aria-label="User Profile"
+            >
+              <i class="fas fa-user"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="px-8">
+          <h2 class="font-bold text-[#163269] text-md mb-4">
+            Instructor Dashboard
+          </h2>
+          <div class="flex space-x-4">
+            <!-- Students Card -->
+            <div class="bg-white p-6 w-60 rounded-lg shadow-md">
+              <div class="flex items-center">
+                <img
+                  src="../images/icons8-student-50 (1).png"
+                  alt="Students"
+                  class="w-14 mr-3"
+                />
+                <div class="w-[0.5px] bg-black h-12 mx-2"></div>
+                <!-- Thinner separator line -->
+                <div>
+                  <p class="text-xl font-bold text-black">Students</p>
+                  <p class="text-sm font-semibold text-gray-700">20</p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-white p-6 w-60 rounded-lg shadow-md subject-card"
+              style="cursor: pointer"
+            >
+              <div class="flex items-center">
+                <img
+                  src="../images/icons8-lawyer-green.png"
+                  alt="Subjects"
+                  class="w-14 mr-3"
+                />
+                <div class="w-[0.8px] bg-black h-12 mx-2"></div>
+                <!-- Optional: add if you want line inside Subjects card too -->
+                <div>
+                  <p class="text-lg font-bold text-black">Subjects</p>
+                  <p class="text-sm font-semibold text-gray-700">4</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analytics Chart -->
+          <div
+            class="bg-white my-4 rounded-lg shadow-md border border-gray-300 p-4"
+          >
+            <h3 class="font-semibold text-gray-700 mb-2">
+              Department Analytics
+            </h3>
+            <canvas id="departmentChart"></canvas>
+          </div>
+
+          <!-- Chart.js CDN -->
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script src="admin-script.js"></script>
+          <script src="../authentication.js"></script>
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const subjectCard = document.querySelector(".subject-card");
+              if (subjectCard) {
+                subjectCard.addEventListener("click", () => {
+                  window.location.href =
+                    "ClassRecord-Subject.html?subject=Subjects";
+                });
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
