@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form action="" onsubmit="return checkForm()">
+      <label for="">Name</label>
+      <input type="text" name="name" id="name" />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <h1 id="displayName"></h1>
+
+    <script>
+      function checkForm() {
+        let name = document.getElementById("name").value;
+
+        const hasNum = /\d/;
+
+        if (name === "") {
+          alert("Please enter your name");
+          return false; // Prevent form submission
+        }
+
+        if (hasNum.test(name)) {
+          alert("Name should not contain numbers");
+          return false; // Prevent form submission
+        }
+        document.getElementById("displayName").textContent = `Hello, ${name}!`;
+
+        return false; // Prevent form submission
+      }
+    </script>
+  </body>
+</html>
